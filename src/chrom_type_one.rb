@@ -1,5 +1,6 @@
-require_relative 'chromosome'
-require 'k_sat'
+require_relative './chromosome.rb'
+require './k_sat.rb'
+require './gen.rb'
 
 # Only difference from template is fitness function.
 class ChromosomeTypeOne < Chromosome
@@ -9,15 +10,16 @@ class ChromosomeTypeOne < Chromosome
     # no negation here so just return it.
     # If element is not greater than 0 there is negation,
     # switch it from 0 to 1 or from 1 to 0.
+    clause_element = clause_element.to_i
     element = (value[(clause_element).abs - 1]).to_i
 
     if clause_element > 0
       element
     elsif clause_element < 0
       element == 0 ? 1 : 0
+    else
+      puts "Some error occured when taking the element!"
     end
-
-    puts "Some error occured when taking the element!"
   end
 
   # Check if clause is CORRECT.
@@ -30,7 +32,7 @@ class ChromosomeTypeOne < Chromosome
     check = 0
     # Loop over K_SAT elements of clause so we get the result of
     # the alternatives in it.
-    for i in 0...K_SAT
+    (K_SAT - 1).times do |i|
       check |= take_element(value, clause[i])
     end
     # return the value of function
@@ -48,7 +50,7 @@ class ChromosomeTypeOne < Chromosome
   def fitness(formula)
     count = 0
     # Loop for all of clauses.
-    formula.clause.each_with_index do |c, index|
+    formula.each_with_index do |c, index|
       res = check_correctness(@value, c, index)
       # If the result is GOOD (1) add one to the counter
       # otherwise just return true and check the next one.
@@ -59,3 +61,23 @@ class ChromosomeTypeOne < Chromosome
   end
 
 end
+
+test_data = read_CNF("aim-50-2_0-yes1-1.cnf")
+
+genalg = GeneticAlgorithm.new
+result = genalg.run(test_data[2],
+                ChromosomeTypeOne,
+                test_data[1],
+                100,
+                100,
+                0.1,
+                0.1,
+                1,
+                "roulette",
+                10,
+                test_data[0]
+               )
+
+puts result[0].value.to_s
+puts result[0].rating
+puts result[1]

@@ -1,4 +1,4 @@
-class GenticAlgorithm
+class GeneticAlgorithm
 
   # generate chromosome
   def generate(chromosome, size)
@@ -70,15 +70,14 @@ class GenticAlgorithm
   #                      If equal 0 the condition is not checked.
   #                      By default 0.
   def run(formula = [],
-          chromosome,
+          chromosome = nil,
           chromosome_size = 0,
           population_size = 100,
           iterations = 100,
-          # dodać żeby w momencie braku poprawy przerywał iter_stall = -1,
           crossover_rate = 0.1,
           mutation_rate = 0.1,
           elitism = 0,
-          selection_method = "roulette"
+          selection_method = "roulette",
           selection_param = 10,
           desired_result = 0
          )
