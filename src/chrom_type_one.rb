@@ -10,12 +10,12 @@ class ChromosomeTypeOne < Chromosome
     # no negation here so just return it.
     # If element is not greater than 0 there is negation,
     # switch it from 0 to 1 or from 1 to 0.
-    clause_element = clause_element.to_i
-    element = (value[(clause_element).abs - 1]).to_i
+    clause_tmp = clause_element.to_i
+    element = (value[(clause_tmp).abs - 1]).to_i
 
-    if clause_element > 0
+    if clause_tmp > 0
       element
-    elsif clause_element < 0
+    elsif clause_tmp < 0
       element == 0 ? 1 : 0
     else
       puts "Some error occured when taking the element!"
@@ -32,7 +32,7 @@ class ChromosomeTypeOne < Chromosome
     check = 0
     # Loop over K_SAT elements of clause so we get the result of
     # the alternatives in it.
-    (K_SAT - 1).times do |i|
+    (K_SAT).times do |i|
       check |= take_element(value, clause[i])
     end
     # return the value of function
