@@ -3,7 +3,7 @@ require './k_sat.rb'
 require './gen.rb'
 
 # Only difference from template is fitness function.
-class ChromosomeTypeOne < Chromosome
+class ChromosomeTypeTwo < Chromosome
 
   def take_element(value, clause_element)
     # If element is greater than 0 that means it is
@@ -25,7 +25,7 @@ class ChromosomeTypeOne < Chromosome
   # Check if clause is CORRECT.
   # Take the K_SAT quantity of [0, 1] elements from
   # sub_clause and check the correctness of boolean alternatives.
-  def check_correctness(value, clause, index)
+  def number_of_correct_assignment(value, clause, index)
     # Starting with 0 assures us that in case of all false (0)
     # elements the function returns 0 (which means that clause
     # is wrong).
@@ -33,7 +33,7 @@ class ChromosomeTypeOne < Chromosome
     # Loop over K_SAT elements of clause so we get the result of
     # the alternatives in it.
     (K_SAT).times do |i|
-      check |= take_element(value, clause[i])
+      check += take_element(value, clause[i])
     end
     # return the value of function
     check
@@ -51,10 +51,10 @@ class ChromosomeTypeOne < Chromosome
     count = 0
     # Loop for all of clauses.
     formula.each_with_index do |c, index|
-      res = check_correctness(@value, c, index)
+      res = number_of_correct_assignment(@value, c, index)
       # If the result is GOOD (1) add one to the counter
       # otherwise just return true and check the next one.
-      res == 1 ? count += 1 : true
+      rcount += res
     end
     # Change the rating value to counter(*).
     @rating = count
@@ -66,18 +66,18 @@ test_data = read_CNF("aim-50-2_0-yes1-1.cnf")
 
 genalg = GeneticAlgorithm.new
 result = genalg.run(test_data[2],
-                ChromosomeTypeOne,
+                ChromosomeTypeTwo,
                 test_data[0],
-                1200,
+                1000,
                 20000,
-                0.6,
+                0.3,
                 0.1,
-                0,
-                "tournament",
                 10,
-                test_data[1]
+                "roulette",
+                5,
+                test_data[1] * K_SAT
                )
 
 puts result[0].value.to_s
-puts result[0].rating
+puts result[0].rating / K_SAT
 puts result[1]

@@ -1,5 +1,5 @@
 # Constant number of variables in one clause.
-K_SAT = 2
+K_SAT = 3
 # Directory with dataset files.
 DIR = "../datasets/"
 

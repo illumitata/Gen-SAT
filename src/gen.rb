@@ -98,6 +98,9 @@ class GeneticAlgorithm
       current_generation = current_generation.sort_by { |c| -(c.rating) }
       # The best fit in generation is always at 0 index.
       best_fit = current_generation[0]
+
+      puts iter.to_s + " " + best_fit.rating.to_s
+
       # If the best fit is equal to the best_fit_condition
       # stop the algorithm and return results.
       if desired_result > 0 && desired_result == best_fit.rating
@@ -117,6 +120,7 @@ class GeneticAlgorithm
       # generation by default... lucky bastard.
       ((population_size - elitism) / 2).times do
         # Select pair of chromosomes.
+        pair = []
         pair = select_pair(current_generation,
                            selection_method,
                            selection_param
