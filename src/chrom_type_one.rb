@@ -54,8 +54,8 @@ class ChromosomeTypeOne < Chromosome
       # otherwise just return true and check the next one.
       res == 1 ? count += 1 : true
     end
-    # Return value of counter(*).
-    count
+    # Change the rating value to counter(*).
+    @rating = count
   end
 
 end
