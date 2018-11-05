@@ -25,10 +25,10 @@ class GeneticAlgorithm
     group_one = population.sample(param)
     group_two = population.sample(param)
     # Find the best ones in each group.
-    group_one.sort_by { |c_one| -(c_one.rating) }
-    group_two.sort_by { |c_two| -(c_two.rating) }
+    win_one = group_one.max_by { |c_one| c_one.rating }
+    win_two = group_two.max_by { |c_two| c_two.rating }
     # Return winners.
-    [group_one[0], group_two[0]]
+    [win_one, win_two]
   end
 
   # Selection method that is used to get pair of chromosomes.
@@ -82,6 +82,8 @@ class GeneticAlgorithm
           desired_result = 0
          )
 
+    puts selection_method
+
     # Generate random population at the begining.
     population = population_size.times.map { generate(chromosome,
                                                       chromosome_size) }
@@ -93,7 +95,7 @@ class GeneticAlgorithm
       # Calculate rating for each chromosome.
       current_generation = current_generation.each { |c| c.fitness(formula) }
       # Sort generation by rating.
-      current_generation.sort_by { |c| -(c.rating) }
+      current_generation = current_generation.sort_by { |c| -(c.rating) }
       # The best fit in generation is always at 0 index.
       best_fit = current_generation[0]
       # If the best fit is equal to the best_fit_condition

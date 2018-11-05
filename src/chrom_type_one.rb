@@ -67,15 +67,15 @@ test_data = read_CNF("aim-50-2_0-yes1-1.cnf")
 genalg = GeneticAlgorithm.new
 result = genalg.run(test_data[2],
                 ChromosomeTypeOne,
-                test_data[1],
-                100,
-                100,
-                0.1,
-                0.1,
-                1,
+                test_data[0],
+                200,
+                20000,
+                0.20,
+                0.30,
+                5,
                 "roulette",
-                10,
-                test_data[0]
+                6,
+                test_data[1]
                )
 
 puts result[0].value.to_s

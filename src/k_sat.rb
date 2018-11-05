@@ -1,9 +1,7 @@
 # Constant number of variables in one clause.
-K_SAT = 3
+K_SAT = 2
 # Directory with dataset files.
 DIR = "../datasets/"
-
-filename_arr = ["aim-50-2_0-yes1-1.cnf"]
 
 # Read CNF file and load it into the array.
 def read_CNF(filename)
