@@ -16,6 +16,34 @@ class GenticAlgorithm
     [chromosome.new(chromosome_one), chromosome.new(chromosome_two)]
   end
 
+  def linear_ranking(population, param)
+    1 # TO DO
+  end
+
+  def tournament_selection(population, param)
+    # Create two groups.
+    group_one = population.sample(param)
+    group_two = population.sample(param)
+    # Find the best ones in each group.
+    group_one.sort_by { |c_one| -(c_one.rating) }
+    group_two.sort_by { |c_two| -(c_two.rating) }
+    # Return winners.
+    [group_one[0], group_two[0]]
+  end
+
+  # Selection method that is used to get pair of chromosomes.
+  def select_pair(population, selection_method, selection_param)
+    if selection_method == "linear"
+      linear_ranking(population, selection_param)
+    elsif selection_method == "tournament"
+      tournament_selection(population, selection_param)
+    elsif selection_method == "roulette"
+      population.sample(2)
+    else
+      puts "Selection method has wrong name."
+    end
+  end
+
   # Run of genetic algorithm. Parameters:
   # formula - formula that is solved by algorithm
   # chromosome - class of chromosome that is used in function.
