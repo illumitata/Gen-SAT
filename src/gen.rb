@@ -1,10 +1,5 @@
 class GeneticAlgorithm
 
-  # generate chromosome
-  def generate(chromosome, size)
-    chromosome.new("", size)
-  end
-
   # Crossover function of two chromosomes called pair.
   # Taking one part from start to spliting point of one
   # chromosome and connecting it to thepart from spliting
@@ -73,7 +68,7 @@ class GeneticAlgorithm
           chromosome = nil,
           chromosome_size = 0,
           population_size = 100,
-          iterations = 100,
+          iterations = 1000,
           crossover_rate = 0.1,
           mutation_rate = 0.1,
           elitism = 0,
@@ -85,11 +80,11 @@ class GeneticAlgorithm
     puts selection_method
 
     # Generate random population at the begining.
-    population = population_size.times.map { generate(chromosome,
-                                                      chromosome_size) }
+    population = Array.new(population_size) { chromosome.new("",
+                                                             chromosome_size) }
     # Set first generatation
     current_generation = population
-    next_generation = []
+    next_generation = Array.new(0)
 
     iterations.times do |iter|
       # Calculate rating for each chromosome.
@@ -97,21 +92,21 @@ class GeneticAlgorithm
       # Sort generation by rating.
       current_generation = current_generation.sort_by { |c| -(c.rating) }
       # The best fit in generation is always at 0 index.
-      best_fit = current_generation[0]
-
-      puts iter.to_s + " " + best_fit.rating.to_s
-
-      # If the best fit is equal to the best_fit_condition
-      # stop the algorithm and return results.
-      if desired_result > 0 && desired_result == best_fit.rating
-        return [best_fit, iter]
-      end
 
       # Take elite to the next generation.
       # Elite is always on the begining due to sorting
       # at the begining of iteration.
-      elitism.times do |i|
-        next_generation << current_generation[i]
+      elitism.times do |elite|
+        next_generation << current_generation[elite]
+      end
+
+      best_fit = current_generation[0]
+
+      puts iter.to_s + " || " + best_fit.rating.to_s if iter % 100 == 0
+      # If the best fit is equal to the best_fit_condition
+      # stop the algorithm and return results.
+      if desired_result > 0 && desired_result == best_fit.rating
+        return [best_fit, iter]
       end
 
       # Run selection method ((population_size - elitism) / 2)
@@ -120,11 +115,18 @@ class GeneticAlgorithm
       # generation by default... lucky bastard.
       ((population_size - elitism) / 2).times do
         # Select pair of chromosomes.
-        pair = []
+        pair = Array.new(0)
         pair = select_pair(current_generation,
                            selection_method,
                            selection_param
                           )
+
+        # Create new instances, conflicts when copying the sample
+        # chromosomes and mutate them instead of new ones!
+        # In worst case elitism doesn't work at all, because
+        # elite chromosomes got edited.
+        pair[0] = chromosome.new(pair[0].value)
+        pair[1] = chromosome.new(pair[1].value)
 
         if rand < crossover_rate
           pair = crossover(pair, rand(0..chromosome_size), chromosome)
@@ -135,13 +137,15 @@ class GeneticAlgorithm
 
         next_generation << pair[0] << pair[1]
       end
+
       # Add lucky bastard if there is one.
       if ((population_size - elitism) % 2) == 1
         next_generation << current_generation[rand(0...population_size)]
       end
 
       current_generation = next_generation
-      next_generation = []
+      next_generation = Array.new(0)
+
     end
     # Return the best solution.
     current_generation = current_generation.each { |c| c.fitness(formula) }

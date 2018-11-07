@@ -54,7 +54,7 @@ class ChromosomeTypeOne < Chromosome
       res = check_correctness(@value, c, index)
       # If the result is GOOD (1) add one to the counter
       # otherwise just return true and check the next one.
-      res == 1 ? count += 1 : true
+      count += 1 if res == 1
     end
     # Change the rating value to counter(*).
     @rating = count
@@ -64,20 +64,28 @@ end
 
 test_data = read_CNF("aim-50-2_0-yes1-1.cnf")
 
+# Start of time measuring.
+t1 = Time.now
+
 genalg = GeneticAlgorithm.new
 result = genalg.run(test_data[2],
                 ChromosomeTypeOne,
                 test_data[0],
-                1200,
-                20000,
-                0.6,
+                80,
+                200000,
+                0.3,
                 0.1,
-                0,
-                "tournament",
-                10,
+                1,
+                "roulette",
+                6,
                 test_data[1]
                )
+
+# End of time measuring.
+t2 = Time.now
+alg_time = t2 - t1
 
 puts result[0].value.to_s
 puts result[0].rating
 puts result[1]
+puts alg_time
