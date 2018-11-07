@@ -71,13 +71,13 @@ genalg = GeneticAlgorithm.new
 result = genalg.run(test_data[2],
                 ChromosomeTypeOne,
                 test_data[0],
-                80,
+                10,
                 200000,
-                0.3,
-                0.1,
+                0.5,
+                0.05,
                 1,
                 "roulette",
-                6,
+                4,
                 test_data[1]
                )
 
