@@ -194,7 +194,7 @@ Poniżej zostaje opisane działanie funkcji:\\
 
 \section{Kontrola nad populacją}
 
-\subsection{Porówanie selekcji}
+\subsection{Selekcja naturalna}
 
 \indent Podane testom formuły (wszystkie zawarte w folerze \textit{datasets}) zostały sprawdzone przy pomocy dostępnego w internecie SAT-solvera\footnote{\url{https://msoos.github.io/cryptominisat_web/}} dla zapewnienia rozwiązywalności zadania.\newpage By uzyskać odpowiedź na pytanie, która z metod selekcji prowadzi do skuteczniejszego rozwiązywania przeprowadzone zostały test dla dwóch instacji problemu w postaci 40 zmiennych w 80 klauzulach oraz 50 zmiennych w 100 klauzulach. Parametry takie jak maksymalna ilość iteracji \textit{(10000)}, elityzm \textit{(1)}, szansa krzyżowania \textit{(0.3)} oraz mutacji \textit{(0.1)} były stałe dla każdego testu. Dla każdej z 10 losowo tworzonych generacji uruchamiano pomiary na 5 unikalnych rozmiarów populacji. Dodatkowo by zapewnić wiarygodność rozwiązania, każda wygenerowana populacja poczatkowa była identyczna dla obu selekcji. Wykresy sporządzone na podstawie wyników \textit{(Rysunek 1)} wyraźnie przedstawiają przewagę metody turniejowej. Związek ilość iteracji, a czasu wykonania jest również widoczny w przeprowadzonych badaniach\footnote{Dostępne w folderze datasets.}. Jest o kilka rzędów wielkości sprawniejsza od przeciętnego uruchomienia selekcji "ruletki", pomimo obciążenia ciągłym sortowaniem grup turniejowych.\\ \indent
 Efektywność metody to jednak nie tylko czas obliczeń, porównana została również stabilność. Różnica między medianą, a średnią arytmetyczną czasu działania algorytmu dla metody ruletki jest znacząca. Metoda nie jest stabilna przez wysoki stopień losowości w wyborze następnych kandydatów do przetrwania. Określony również został powód tak znaczącej róznicy. W tabeli \textit{(Tablica 1)} wyraźnie widać ilość niedokładnych wyników zwróconych przez algorytm w przypadku niestabilnej metody.
@@ -224,9 +224,14 @@ W przypadku funkcji ruletki dokładnie rozwiązanie nie zostało znalezione nawe
   \label{fig:coffee}
 \end{figure}
 
-\subsection{Subsection Two}
-
-\blindtext % Dummy text
+\subsection{Rozmiar formuł}
+Na wykresie \textit{(Rysunek 2)} został przedstawiony czas działania algorytmu dla zmieniających się rozmiarów klauzul. Zgodnie z oczekiwaniami czas potrzebny na wykonanie programu zwiększa się razem z rozmiarem rozwiązywanego problemu. Program nadzwyczajnie dobrze radzi sobie z problemami do rozmiarów 40 zmiennych w 80 klauzulach. Następnie zauważalny jest gwałtowny spadek wydajności rozwiązania oraz większa rozbieżność czasu wykonania pomiędzy uruchomieniami algorytmu. Możliwym rozwiązaniem tych zachwiań może okazać się dobór bardziej optymalnych parametrów. Natomiast czynnik losowości zmian bądź inny zestaw chromosomów początkowych może zaważyć o czasie zakończenia algorytmu, dlatego nie jest możliwe przewidzenie optymalnych parametrów dla danej instancji problemu bez wyczerpujących testów.
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\linewidth]{comp.png}
+  \caption{Selekcja turniejowa dla różnych \\rozmiarów problemu}
+  \label{fig:coffee}
+\end{figure}
 
 %----------------------------------------------------------------------------------------
 %	REFERENCE LIST

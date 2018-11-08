@@ -7,6 +7,11 @@ t_40_80 <- read.csv("/home/illumitata/Studia/IntOblicz/projekt1/datasets/diff_po
 r_40_80 <- read.csv("/home/illumitata/Studia/IntOblicz/projekt1/datasets/diff_pop/jan-50x-100k_roulette_result.csv", head=F, sep=',')
 t_40_80 <- read.csv("/home/illumitata/Studia/IntOblicz/projekt1/datasets/diff_pop/jan-50x-100k_tournament_result.csv", head=F, sep=',')
 
+k_30_60 <- read.csv("/home/illumitata/Studia/IntOblicz/projekt1/datasets/diff_k/jan-30x-60k_tournament_result.csv", head=F, sep=',')
+k_40_80 <- read.csv("/home/illumitata/Studia/IntOblicz/projekt1/datasets/diff_k/jan-40x-80k_tournament_result.csv", head=F, sep=',')
+k_50_100 <- read.csv("/home/illumitata/Studia/IntOblicz/projekt1/datasets/diff_k/jan-50x-100k_tournament_result.csv", head=F, sep=',')
+k_60_120 <- read.csv("/home/illumitata/Studia/IntOblicz/projekt1/datasets/diff_k/jan-60x-120k_tournament_result.csv", head=F, sep=',')
+
 # failed runs
 r_failed <- sum(r_40_80$V7)
 t_failed <- sum(t_40_80$V7)
