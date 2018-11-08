@@ -114,10 +114,10 @@ konfiguracja dla zaimplemenotwanego rozwiązania. % \blindtext % Dummy abstract 
 \lettrine[nindent=0em,lines=3]{3} -SAT jest jednym z najbardziej rozpoznawalnych problemów
 należących do klasy złożoności obliczeniowej zwanej NP. Charakterystyczną dla tej grupy
 cechą jest możliwość sprawdzenia rozwiązania w czasie wielomianowym. Pomimo trywialności
-sprawdzenia rozwiązania, znalezienie rozwiązania jest zadaniem trudniejszym. Zatem wyszukiwanie
-formuły spełniającej daną formułę logiczną w formie CNF powinno być równie czasochłonnym zajęciem.
+sprawdzenia rozwiązania, znalezienie takiego jest zadaniem trudniejszym. Zatem wyszukiwanie
+wartościowania spełniającego daną formułę logiczną w formie CNF powinno być równie czasochłonnym zajęciem.
 Czy na pewno? W poniższym artykule przedstawiona zostanie metoda wyszukiwania rozwiązań za pomocą
-binarnego algorytmu genetycznego. Cechujący się losowością, bardzo nieprzewidywalny algorytm, którego głównym zadaniem jest znalezienie optymalnego rozwiązania (niekoniecznie dokładnego) zostanie skonfrontowany z nietrywialną natura problemu 3-SAT.
+binarnego algorytmu genetycznego. Cechujący się losowością, bardzo nieprzewidywalny algorytm, którego głównym zadaniem jest znalezienie optymalnego rozwiązania (niekoniecznie dokładnego) zostanie skonfrontowany z nietrywialną naturą problemu 3-SAT.
 %------------------------------------------------
 
 \section{Chromosom pracujący}
@@ -180,7 +180,7 @@ Poniżej zostaje opisane działanie funkcji:\\
 		\item Znajdź bit w chromosomie odpowiadający za i-ty element klauzuli.
 		\item Jeśli element klauzuli jest ujemny, zaprzecz bitowi chromosomu.
 		\item Zwróć wartość bitu.
-		\item Sprawdź alternatywę bierzącego elementu z check.
+		\item Sprawdź alternatywę bieżącego elementu z check.
 		      \end{enumerate}
 
 		\item Zwróć wartość check.
@@ -196,8 +196,8 @@ Poniżej zostaje opisane działanie funkcji:\\
 
 \subsection{Selekcja naturalna}
 
-\indent Podane testom formuły (wszystkie zawarte w folerze \textit{datasets}) zostały sprawdzone przy pomocy dostępnego w internecie SAT-solvera\footnote{\url{https://msoos.github.io/cryptominisat_web/}} dla zapewnienia rozwiązywalności zadania.\newpage By uzyskać odpowiedź na pytanie, która z metod selekcji prowadzi do skuteczniejszego rozwiązywania przeprowadzone zostały test dla dwóch instacji problemu w postaci 40 zmiennych w 80 klauzulach oraz 50 zmiennych w 100 klauzulach. Parametry takie jak maksymalna ilość iteracji \textit{(10000)}, elityzm \textit{(1)}, szansa krzyżowania \textit{(0.3)} oraz mutacji \textit{(0.1)} były stałe dla każdego testu. Dla każdej z 10 losowo tworzonych generacji uruchamiano pomiary na 5 unikalnych rozmiarów populacji. Dodatkowo by zapewnić wiarygodność rozwiązania, każda wygenerowana populacja poczatkowa była identyczna dla obu selekcji. Wykresy sporządzone na podstawie wyników \textit{(Rysunek 1)} wyraźnie przedstawiają przewagę metody turniejowej. Związek ilość iteracji, a czasu wykonania jest również widoczny w przeprowadzonych badaniach\footnote{Dostępne w folderze datasets.}. Jest o kilka rzędów wielkości sprawniejsza od przeciętnego uruchomienia selekcji "ruletki", pomimo obciążenia ciągłym sortowaniem grup turniejowych.\\ \indent
-Efektywność metody to jednak nie tylko czas obliczeń, porównana została również stabilność. Różnica między medianą, a średnią arytmetyczną czasu działania algorytmu dla metody ruletki jest znacząca. Metoda nie jest stabilna przez wysoki stopień losowości w wyborze następnych kandydatów do przetrwania. Określony również został powód tak znaczącej róznicy. W tabeli \textit{(Tablica 1)} wyraźnie widać ilość niedokładnych wyników zwróconych przez algorytm w przypadku niestabilnej metody.
+\indent Podane testom formuły (wszystkie zawarte w folerze \textit{datasets}) zostały sprawdzone przy pomocy dostępnego w internecie SAT-solvera\footnote{\url{https://msoos.github.io/cryptominisat_web/}} dla zapewnienia rozwiązywalności zadania.\newpage By uzyskać odpowiedź na pytanie, która z metod selekcji prowadzi do skuteczniejszego rozwiązywania przeprowadzone zostały testy dla dwóch instacji problemu w postaci 40 zmiennych w 80 klauzulach oraz 50 zmiennych w 100 klauzulach. Parametry takie jak maksymalna ilość iteracji \textit{(10000)}, elityzm \textit{(1)}, szansa krzyżowania \textit{(0.3)} oraz mutacji \textit{(0.1)} były stałe dla każdego testu. Dla każdej z 10 losowo tworzonych generacji uruchamiano pomiary na 5 unikalnych rozmiarów populacji. Dodatkowo by zapewnić wiarygodność rozwiązania, każda wygenerowana populacja początkowa była identyczna dla obu selekcji. Wykresy sporządzone na podstawie wyników \textit{(Rysunek 1)} wyraźnie przedstawiają przewagę metody turniejowej. Związek ilości iteracji, a czasu wykonania jest również widoczny w przeprowadzonych badaniach\footnote{Dostępne w folderze datasets.}. Jest o kilka rzędów wielkości sprawniejsza od przeciętnego uruchomienia selekcji ruletki, pomimo obciążenia ciągłym sortowaniem grup turniejowych.\\ \indent
+Efektywność metody to jednak nie tylko czas obliczeń, porównana została również stabilność. Różnica między medianą, a średnią arytmetyczną czasu działania algorytmu dla metody ruletki jest znacząca. Metoda nie jest stabilna przez wysoki stopień losowości w wyborze następnych kandydatów do przetrwania. Określony również został powód tak znaczącej różnicy. W tabeli \textit{(Tablica 1)} wyraźnie widać ilość niedokładnych wyników zwróconych przez algorytm w przypadku niestabilnej metody.
 \begin{table}
 \caption{Ilość niedokładnych wyników \\zwróconych przez algorytm}
 \begin{tabular}{l*{2}{c}r}
@@ -208,7 +208,7 @@ turniejowa & 0 & 3 \\
 \end{tabular}
 \end{table}
 W przypadku funkcji ruletki dokładnie rozwiązanie nie zostało znalezione nawet w czasie stałej liczby 10000 iteracji. Dane pokazują jednak, że metoda ruletki potrafi również trafić w momencie lub w pierwszej iteracji w idealne rozwiązanie. Zdarzenie przypadku trafienia idealnego rozwiązania w momencie generacji występowało i będzie występować w obu wersjach selekcji, nie wypływa ono zatem na decyzję o wyborze jednej z przedstawionych metod.
-\\ \indent Analizując wyniki badań oczywistą opcją przy uruchomieniu algorytmu staje się zastosowanie selekcji turniejowej, która zapewnia większą stablinośc oraz jakość rozwiązania.
+\\ \indent Analizując wyniki badań oczywistą opcją przy uruchomieniu algorytmu staje się zastosowanie selekcji turniejowej, która zapewnia większą stabliność oraz jakość rozwiązania.
 
 \begin{figure}[h!]
   \centering

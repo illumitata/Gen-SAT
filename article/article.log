@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.13)  8 NOV 2018 11:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.13)  8 NOV 2018 12:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1040,26 +1040,20 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 257.
  (./article.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 257.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 257.
+Package rerunfilecheck Info: File `article.out' has not changed.
+(rerunfilecheck)             Checksum: 686203F7A7A0B6E8D481567F1D65D33C;319.
 
-
-Package rerunfilecheck Warning: File `article.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `article.out':
-(rerunfilecheck)             Before: 6DD4BF2C8D3FB532207AF4E8D59CB55D;326
-(rerunfilecheck)             After:  686203F7A7A0B6E8D481567F1D65D33C;319.
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 257.
  ) 
 Here is how much of TeX's memory you used:
- 10717 strings out of 493029
- 162846 string characters out of 6136233
+ 10713 strings out of 493029
+ 162792 string characters out of 6136233
  295888 words of memory out of 5000000
- 13915 multiletter control sequences out of 15000+600000
- 94412 words of font info for 129 fonts, out of 8000000 for 9000
+ 13909 multiletter control sequences out of 15000+600000
+ 94495 words of font info for 130 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,13n,43p,1432b,487s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
@@ -1077,7 +1071,7 @@ hare/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public
 /type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy9.pfb></
 usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/
 public/lm/lmtt8.pfb>
-Output written on article.pdf (4 pages, 801937 bytes).
+Output written on article.pdf (4 pages, 801825 bytes).
 PDF statistics:
  170 PDF objects out of 1000 (max. 8388607)
  141 compressed objects within 2 object streams
