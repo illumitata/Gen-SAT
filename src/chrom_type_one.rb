@@ -79,23 +79,23 @@ desired_result = clauses_num
 # for each method in chosen_methods array.
 
 # Number of populations generated.
-population_rounds = 3
+population_rounds = 10
 population_rounds.times do |pop_round|
   # Create new static population to reuse in tests.
   genalg = GeneticAlgorithm.new
   # Population sizes
-  static_pop_size_arr = [10]
+  static_pop_size_arr = [50] #, 25, 50, 100, 200]
 
   static_pop_size_arr.each do |static_pop_size|
     static_population = genalg.generate_population(ChromosomeTypeOne,
                                                    variables_num,
                                                    static_pop_size)
     # Loop over these selection methods.
-    chosen_methods = ["tournament", "roulette"]
+    chosen_methods = ["tournament"] #, "roulette"]
 
     chosen_methods.each do |selection_method|
       # Half of this value is
-      test_rounds = 2
+      test_rounds = 10
 
       test_rounds.times do |test_x|
         # Start of time measuring.
@@ -108,10 +108,10 @@ population_rounds.times do |pop_round|
                         static_pop_size,
                         10000,
                         0.3,
-                        0.15,
+                        0.1,
                         1,
                         selection_method,
-                        10,
+                        5,
                         desired_result
                        )
 
