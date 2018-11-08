@@ -50,6 +50,9 @@ class GeneticAlgorithm
   # formula - formula that is solved by algorithm
   # chromosome - class of chromosome that is used in function.
   # chromosome_size - size of one chromosome, by default 0.
+  # starting_population - array of chromosomes that are used as
+  #                       first population. If not defined or nil
+  #                       creates new random one.
   # population_size - number of chromosomes in population,
   #                   by default 100.
   # iterations - number of iterations, by default 100.

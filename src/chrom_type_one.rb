@@ -63,47 +63,71 @@ class ChromosomeTypeOne < Chromosome
 end
 
 ### Example run of algorithm
-test_data = read_CNF("jan-75x-100k.cnf")
+dir_extention = "diff_k/"
+cnf_name = "jan-60x-120k"
+test_data = read_CNF(dir_extention + cnf_name + ".cnf")
 
-genalg = GeneticAlgorithm.new
-static_size = 100
-static_population = genalg.generate_population(ChromosomeTypeOne,
-                                               test_data[0],
-                                               static_size)
+# How test works:
+# population_rounds * test_rounds is equal to number of tests
+# for each method in chosen_methods array.
 
-test_rounds = 10
+# Number of populations generated.
+population_rounds = 3
+population_rounds.times do |pop_round|
+  # Create new static population to reuse in tests.
+  genalg = GeneticAlgorithm.new
+  # Population sizes
+  static_size_arr = [10]
 
-test_rounds.times do |test_x|
-  if test_x < test_rounds / 2
-    selection_method = "tournament"
-  else
-    selection_method = "roulette"
+  static_size_arr.each do |static_size|
+    static_population = genalg.generate_population(ChromosomeTypeOne,
+                                                   test_data[0],
+                                                   static_size)
+    # Loop over these selection methods.
+    chosen_methods = ["tournament", "roulette"]
+
+    chosen_methods.each do |selection_method|
+      # Half of this value is
+      test_rounds = 2
+
+      test_rounds.times do |test_x|
+        # Start of time measuring.
+        t1 = Time.now
+
+        result = genalg.run(test_data[2],
+                        ChromosomeTypeOne,
+                        test_data[0],
+                        static_population,
+                        static_size,
+                        10000,
+                        0.3,
+                        0.15,
+                        1,
+                        selection_method,
+                        10,
+                        test_data[1]
+                       )
+
+        # End of time measuring.
+        t2 = Time.now
+        alg_time = t2 - t1
+
+        puts "xxxxxxxxxxxxxxxx"
+        print "pop_num: " + pop_round.to_s
+        print " test: " + (test_x + pop_round * test_rounds).to_s
+        print " pop_size: " + static_size.to_s + "\n"
+        puts "method: " + selection_method
+        # puts "result: \n" + result[0].value.to_s
+        puts test_data[1]
+        print "rating: " + result[0].rating.to_s
+        fail_to_find = (result[0].rating != test_data[1]) ? 1 : 0
+        print " failed: " + fail_to_find.to_s + "\n"
+        puts "iter: " + result[1].to_s
+        puts "time: " + alg_time.to_s
+
+        # Write result to file in the same directory.
+
+      end
+    end
   end
-  # Start of time measuring.
-  t1 = Time.now
-
-  result = genalg.run(test_data[2],
-                  ChromosomeTypeOne,
-                  test_data[0],
-                  static_population,
-                  static_size,
-                  10000,
-                  0.3,
-                  0.15,
-                  1,
-                  selection_method,
-                  10,
-                  test_data[1]
-                 )
-
-  # End of time measuring.
-  t2 = Time.now
-  alg_time = t2 - t1
-
-  puts "xxxxxxxxxxxxxxxx"
-  puts "method: " + selection_method
-  # puts "result: \n" + result[0].value.to_s
-  puts "rating: " + result[0].rating.to_s
-  puts "iter: " + result[1].to_s
-  puts "time: " + alg_time.to_s
 end
