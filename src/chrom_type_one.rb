@@ -1,6 +1,7 @@
 require_relative './chromosome.rb'
 require './k_sat.rb'
 require './gen.rb'
+require 'csv'
 
 # Only difference from template is fitness function.
 class ChromosomeTypeOne < Chromosome
@@ -67,6 +68,12 @@ dir_extention = "diff_k/"
 cnf_name = "jan-60x-120k"
 test_data = read_CNF(dir_extention + cnf_name + ".cnf")
 
+cnf_formula = test_data[2]
+clauses_num = test_data[1]
+variables_num = test_data[0]
+
+desired_result = clauses_num
+
 # How test works:
 # population_rounds * test_rounds is equal to number of tests
 # for each method in chosen_methods array.
@@ -77,12 +84,12 @@ population_rounds.times do |pop_round|
   # Create new static population to reuse in tests.
   genalg = GeneticAlgorithm.new
   # Population sizes
-  static_size_arr = [10]
+  static_pop_size_arr = [10]
 
-  static_size_arr.each do |static_size|
+  static_pop_size_arr.each do |static_pop_size|
     static_population = genalg.generate_population(ChromosomeTypeOne,
-                                                   test_data[0],
-                                                   static_size)
+                                                   variables_num,
+                                                   static_pop_size)
     # Loop over these selection methods.
     chosen_methods = ["tournament", "roulette"]
 
@@ -94,18 +101,18 @@ population_rounds.times do |pop_round|
         # Start of time measuring.
         t1 = Time.now
 
-        result = genalg.run(test_data[2],
+        result = genalg.run(cnf_formula,
                         ChromosomeTypeOne,
-                        test_data[0],
+                        variables_num,
                         static_population,
-                        static_size,
+                        static_pop_size,
                         10000,
                         0.3,
                         0.15,
                         1,
                         selection_method,
                         10,
-                        test_data[1]
+                        desired_result
                        )
 
         # End of time measuring.
@@ -115,10 +122,9 @@ population_rounds.times do |pop_round|
         puts "xxxxxxxxxxxxxxxx"
         print "pop_num: " + pop_round.to_s
         print " test: " + (test_x + pop_round * test_rounds).to_s
-        print " pop_size: " + static_size.to_s + "\n"
+        print " pop_size: " + static_pop_size.to_s + "\n"
         puts "method: " + selection_method
         # puts "result: \n" + result[0].value.to_s
-        puts test_data[1]
         print "rating: " + result[0].rating.to_s
         fail_to_find = (result[0].rating != test_data[1]) ? 1 : 0
         print " failed: " + fail_to_find.to_s + "\n"
@@ -126,7 +132,17 @@ population_rounds.times do |pop_round|
         puts "time: " + alg_time.to_s
 
         # Write result to file in the same directory.
-
+        CSV.open(DIR + dir_extention + cnf_name + "_" + selection_method + "_result" + ".csv", "a") do |csv|
+          csv << [
+                  variables_num,
+                  clauses_num,
+                  pop_round,
+                  static_pop_size,
+                  alg_time,
+                  result[0].rating,
+                  fail_to_find
+                 ]
+        end
       end
     end
   end
