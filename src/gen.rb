@@ -1,5 +1,12 @@
 class GeneticAlgorithm
 
+  # Generate random population using chromosome type.
+  # Return array of population_size chromosomes with
+  # chromosome_size of bits in each one.
+  def generate_population(chromosome, chromosome_size, population_size)
+    Array.new(population_size) { chromosome.new("", chromosome_size) }
+  end
+
   # Crossover function of two chromosomes called pair.
   # Taking one part from start to spliting point of one
   # chromosome and connecting it to thepart from spliting
@@ -67,6 +74,7 @@ class GeneticAlgorithm
   def run(formula = [],
           chromosome = nil,
           chromosome_size = 0,
+          starting_population = nil,
           population_size = 100,
           iterations = 1000,
           crossover_rate = 0.1,
@@ -77,11 +85,15 @@ class GeneticAlgorithm
           desired_result = 0
          )
 
-    puts selection_method
+    # If starting_population is given use it as population
+    # and overwrite size of what is given in params!
+    # Otherwise generate random population at the begining.
+    if starting_population.nil?
+      population = generate_population(chromosome, chromosome_size, population_size)
+    else
+      population = starting_population
+    end
 
-    # Generate random population at the begining.
-    population = Array.new(population_size) { chromosome.new("",
-                                                             chromosome_size) }
     # Set first generatation
     current_generation = population
     next_generation = Array.new(0)
@@ -102,7 +114,7 @@ class GeneticAlgorithm
 
       best_fit = current_generation[0]
 
-      puts iter.to_s + " || " + best_fit.rating.to_s if iter % 100 == 0
+      # puts iter.to_s + " || " + best_fit.rating.to_s if iter % 100 == 0
       # If the best fit is equal to the best_fit_condition
       # stop the algorithm and return results.
       if desired_result > 0 && desired_result == best_fit.rating
@@ -113,7 +125,7 @@ class GeneticAlgorithm
       # times  to fill the next generation. In case of population_size
       # not divisible by 2, take the random one to the to the next
       # generation by default... lucky bastard.
-      ((population_size - elitism) / 2).times do
+      ((current_generation.length - elitism) / 2).times do
         # Select pair of chromosomes.
         pair = Array.new(0)
         pair = select_pair(current_generation,
@@ -139,8 +151,8 @@ class GeneticAlgorithm
       end
 
       # Add lucky bastard if there is one.
-      if ((population_size - elitism) % 2) == 1
-        next_generation << current_generation[rand(0...population_size)]
+      if ((current_generation.length - elitism) % 2) == 1
+        next_generation << current_generation[rand(0...current_generation.length)]
       end
 
       current_generation = next_generation

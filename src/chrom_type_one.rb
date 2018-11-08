@@ -62,30 +62,48 @@ class ChromosomeTypeOne < Chromosome
 
 end
 
-test_data = read_CNF("aim-50-2_0-yes1-1.cnf")
-
-# Start of time measuring.
-t1 = Time.now
+### Example run of algorithm
+test_data = read_CNF("jan-75x-100k.cnf")
 
 genalg = GeneticAlgorithm.new
-result = genalg.run(test_data[2],
-                ChromosomeTypeOne,
-                test_data[0],
-                10,
-                200000,
-                0.5,
-                0.05,
-                1,
-                "roulette",
-                4,
-                test_data[1]
-               )
+static_size = 100
+static_population = genalg.generate_population(ChromosomeTypeOne,
+                                               test_data[0],
+                                               static_size)
 
-# End of time measuring.
-t2 = Time.now
-alg_time = t2 - t1
+test_rounds = 10
 
-puts result[0].value.to_s
-puts result[0].rating
-puts result[1]
-puts alg_time
+test_rounds.times do |test_x|
+  if test_x < test_rounds / 2
+    selection_method = "tournament"
+  else
+    selection_method = "roulette"
+  end
+  # Start of time measuring.
+  t1 = Time.now
+
+  result = genalg.run(test_data[2],
+                  ChromosomeTypeOne,
+                  test_data[0],
+                  static_population,
+                  static_size,
+                  10000,
+                  0.3,
+                  0.15,
+                  1,
+                  selection_method,
+                  10,
+                  test_data[1]
+                 )
+
+  # End of time measuring.
+  t2 = Time.now
+  alg_time = t2 - t1
+
+  puts "xxxxxxxxxxxxxxxx"
+  puts "method: " + selection_method
+  # puts "result: \n" + result[0].value.to_s
+  puts "rating: " + result[0].rating.to_s
+  puts "iter: " + result[1].to_s
+  puts "time: " + alg_time.to_s
+end
